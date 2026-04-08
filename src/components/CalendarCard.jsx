@@ -30,6 +30,7 @@ export function CalendarCard({ calendarState }) {
     isSelectedEnd,
     isInRange,
     clearSelection,
+    setSelection,
   } = calendarState;
 
   // Manage notes independently as they do not affect the outer layout visual theme natively
@@ -83,6 +84,7 @@ export function CalendarCard({ calendarState }) {
               deleteNote={deleteNote}
               clearSelection={clearSelection}
               onDateClick={onDateClick}
+              setSelection={setSelection}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
             />

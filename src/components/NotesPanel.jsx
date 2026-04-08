@@ -12,6 +12,7 @@ export function NotesPanel({
   deleteNote,
   clearSelection,
   onDateClick,
+  setSelection,
   activeTab,
   setActiveTab
 }) {
@@ -170,10 +171,9 @@ export function NotesPanel({
                 onClick={() => {
                   if (item.type === 'range') {
                     const [s, e] = item.key.split('_');
-                    onDateClick(new Date(s));
-                    onDateClick(new Date(e));
+                    setSelection(new Date(s), new Date(e));
                   } else {
-                    onDateClick(new Date(item.key));
+                    setSelection(new Date(item.key), null);
                   }
                 }}
                 className="p-1 hover:bg-primary/10 rounded text-primary transition-colors"

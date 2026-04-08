@@ -9,7 +9,8 @@ import {
   isSameDay, 
   isBefore, 
   isAfter, 
-  eachDayOfInterval 
+  eachDayOfInterval,
+  startOfDay
 } from 'date-fns';
 
 /**
@@ -110,12 +111,13 @@ export function useCalendar(initialDate = new Date()) {
    * Necessary for rendering the visual highlight connecting the terminal dates.
    */
   const isInRange = (day) => {
+    const dayStart = startOfDay(day);
     if (startDate && endDate) {
-      return isAfter(day, startDate) && isBefore(day, endDate);
+      return isAfter(dayStart, startOfDay(startDate)) && isBefore(dayStart, startOfDay(endDate));
     }
     // Handle the visual preview before the second click
     if (startDate && hoverDate && !endDate) {
-      return isAfter(day, startDate) && isBefore(day, hoverDate);
+      return isAfter(dayStart, startOfDay(startDate)) && isBefore(dayStart, startOfDay(hoverDate));
     }
     return false;
   };
@@ -135,5 +137,9 @@ export function useCalendar(initialDate = new Date()) {
     isSelectedEnd,
     isInRange,
     clearSelection,
+    setSelection: (start, end) => {
+      setStartDate(start);
+      setEndDate(end);
+    },
   };
 }
