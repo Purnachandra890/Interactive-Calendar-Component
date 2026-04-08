@@ -66,6 +66,14 @@ export function CalendarGrid({
                   isSelectedStart={isSelectedStart(day)}
                   isSelectedEnd={isSelectedEnd(day)}
                   isInRange={isInRange(day)}
+                  isHoverEnd={
+                    hoverDate && 
+                    !endDate && 
+                    startDate && 
+                    format(day, 'yyyy-MM-dd') === format(hoverDate, 'yyyy-MM-dd') && 
+                    day > startDate
+                  }
+                  rangeActive={!!startDate && (!!endDate || (!!hoverDate && hoverDate > startDate))}
                   hasNote={hasNote}
                   dayNote={dayNoteStr}
                   onDateClick={onDateClick}
