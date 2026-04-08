@@ -43,7 +43,7 @@ export function CalendarCard({ calendarState }) {
         <HeroSection currentMonth={currentMonth} />
 
         {/* Middle + Right Side: Calendar & Notes */}
-        <div className="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col md:flex-row md:h-full overflow-hidden">
+        <div className="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col md:flex-row md:h-full relative">
           
           {/* Main Calendar Area */}
           <div className="flex-1 flex flex-col min-w-[320px]">
@@ -73,7 +73,7 @@ export function CalendarCard({ calendarState }) {
           </div>
 
           {/* Side/Bottom Panel for Notes */}
-          <div className="w-full md:w-72 lg:w-80 shrink-0 md:h-full overflow-hidden">
+          <div className="w-full md:w-72 lg:w-80 shrink-0 md:h-full relative">
             <NotesPanel
               currentMonth={currentMonth}
               startDate={startDate}

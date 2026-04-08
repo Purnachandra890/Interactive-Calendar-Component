@@ -3,6 +3,18 @@ import { cn } from '../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HOLIDAYS } from '../config/holidays';
 
+const getHolidayStyles = (type) => {
+  switch(type) {
+    case 'national': 
+      return { bg: 'bg-orange-500/15 dark:bg-orange-500/20', border: 'border border-orange-500/30', dot: 'bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.6)]' };
+    case 'festival': 
+      return { bg: 'bg-amber-500/15 dark:bg-amber-500/20', border: 'border border-amber-500/30', dot: 'bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.6)]' };
+    case 'cultural': 
+    default: 
+      return { bg: 'bg-blue-500/15 dark:bg-blue-500/20', border: 'border border-blue-500/30', dot: 'bg-blue-500 shadow-[0_0_6px_rgba(59,130,246,0.6)]' };
+  }
+};
+
 export function DayCell({
   day,
   currentMonth,
@@ -20,6 +32,7 @@ export function DayCell({
   const _isToday = isToday(day);
   const _isSameMonth = isSameMonth(day, currentMonth);
   const holiday = _isSameMonth ? HOLIDAYS[format(day, 'MM-dd')] : null;
+  const hStyle = holiday ? getHolidayStyles(holiday.type) : null;
 
   let initialMemos = dayNote ? dayNote.split('\n').map(l => l.trim()).filter(l => l.length > 0) : [];
   let quickMemos = initialMemos.filter(line => line.startsWith('- ')).map(line => line.substring(2));
@@ -89,6 +102,16 @@ export function DayCell({
               <div className="absolute inset-0 rounded-full bg-primary/30 border border-primary/40 shadow-sm scale-90 opacity-70 backdrop-blur-[2px] transition-all" />
             )}
 
+            {/* Holiday Background */}
+            {holiday && !_isToday && !(isSelectedStart || isSelectedEnd) && (
+              <div className={cn("absolute inset-0 rounded-full transition-colors", hStyle.bg, hStyle.border)} />
+            )}
+            
+            {/* Today + Holiday Combined Highlights */}
+            {holiday && _isToday && !(isSelectedStart || isSelectedEnd) && (
+               <div className={cn("absolute inset-0 rounded-full border border-dashed transition-colors", hStyle.border)} />
+            )}
+
             {/* Day Number Label (Pinned to exact same inset-0) */}
             <div className="absolute inset-0 flex items-center justify-center z-20">
               <span className={cn(
@@ -119,22 +142,15 @@ export function DayCell({
         </div>
       )}
 
-      {/* Note: Holiday Marker and Background effects are separated neatly now. */}
-
-      {/* Holiday Marker */}
+      {/* Holiday Tooltip (Triggers on cell hover) */}
       {holiday && (
-        <div className="absolute top-1 sm:top-1.5 right-1 sm:right-1.5 z-30 group/holiday leading-none">
-          <span className="text-[10px] sm:text-[13px] drop-shadow-sm transition-transform duration-300 inline-block group-hover/holiday:scale-125 group-hover/holiday:-rotate-12 cursor-pointer">
-            {holiday.icon}
-          </span>
-          {/* Custom Tooltip */}
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 sm:mb-1.5 opacity-0 group-hover/holiday:opacity-100 transition-all duration-200 pointer-events-none scale-95 group-hover/holiday:scale-100 ease-out origin-bottom flex flex-col items-center">
-            <div className="bg-foreground text-background text-[9px] sm:text-[10px] whitespace-nowrap px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md shadow-md font-medium tracking-wide">
-              {holiday.name}
-            </div>
-            {/* Little Triangle Pointer */}
-            <div className="w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-foreground -mt-px relative z-10" />
+        <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 -translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none flex flex-col items-center">
+          <div className="bg-foreground/95 backdrop-blur-sm text-background text-[10px] sm:text-xs whitespace-nowrap px-2.5 py-1.5 rounded-lg shadow-xl font-medium tracking-wide flex items-center gap-1.5">
+            <span>{holiday.name}</span>
+            <span className="text-sm">{holiday.icon}</span>
           </div>
+          {/* Pointer Triangle */}
+          <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-foreground/95 -mt-px" />
         </div>
       )}
 
