@@ -1,6 +1,7 @@
 import { format, isToday, isSameMonth } from 'date-fns';
 import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
+import { HOLIDAYS } from '../config/holidays';
 
 export function DayCell({
   day,
@@ -16,6 +17,7 @@ export function DayCell({
 }) {
   const _isToday = isToday(day);
   const _isSameMonth = isSameMonth(day, currentMonth);
+  const holiday = _isSameMonth ? HOLIDAYS[format(day, 'MM-dd')] : null;
 
   let initialMemos = dayNote ? dayNote.split('\n').map(l => l.trim()).filter(l => l.length > 0) : [];
   let quickMemos = initialMemos.filter(line => line.startsWith('- ')).map(line => line.substring(2));
@@ -29,7 +31,7 @@ export function DayCell({
       onClick={() => onDateClick(day)}
       onMouseEnter={() => onDateHover(day)}
       className={cn(
-        "relative w-full h-14 sm:h-16 flex flex-col items-center justify-start pt-2 sm:pt-3 text-sm transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 overflow-hidden",
+        "relative w-full h-14 sm:h-16 flex flex-col items-center justify-start pt-2 sm:pt-3 text-sm transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 hover:z-50",
         !_isSameMonth && "text-muted-foreground/50 opacity-50",
         _isSameMonth && "text-foreground font-medium",
         isInRange && "bg-primary/10",
@@ -74,6 +76,23 @@ export function DayCell({
       
       {(isSelectedStart || isSelectedEnd) && (
         <div className="absolute inset-1 rounded-lg bg-primary shadow-md -z-0" />
+      )}
+
+      {/* Holiday Marker */}
+      {holiday && (
+        <div className="absolute top-1 sm:top-1.5 right-1 sm:right-1.5 z-30 group/holiday leading-none">
+          <span className="text-[10px] sm:text-[13px] drop-shadow-sm transition-transform duration-300 inline-block group-hover/holiday:scale-125 group-hover/holiday:-rotate-12 cursor-pointer">
+            {holiday.icon}
+          </span>
+          {/* Custom Tooltip */}
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 sm:mb-1.5 opacity-0 group-hover/holiday:opacity-100 transition-all duration-200 pointer-events-none scale-95 group-hover/holiday:scale-100 ease-out origin-bottom flex flex-col items-center">
+            <div className="bg-foreground text-background text-[9px] sm:text-[10px] whitespace-nowrap px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md shadow-md font-medium tracking-wide">
+              {holiday.name}
+            </div>
+            {/* Little Triangle Pointer */}
+            <div className="w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-foreground -mt-px relative z-10" />
+          </div>
+        </div>
       )}
 
       {/* Note Indicator (Visible when Schedules tab is active) */}

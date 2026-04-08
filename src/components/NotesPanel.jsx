@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { NotebookPen, Save, Info, ChevronLeft, Zap, Settings2, Check, X, Plus, Pencil, Trash2 } from 'lucide-react';
-
+import { HOLIDAYS } from '../config/holidays';
 
 export function NotesPanel({
   currentMonth,
@@ -18,6 +18,7 @@ export function NotesPanel({
   const [text, setText] = useState('');
   const isMonthView = !startDate && !endDate;
   const isSingleDateView = startDate && !endDate;
+  const activeHoliday = isSingleDateView ? HOLIDAYS[format(startDate, 'MM-dd')] : null;
 
   const [quickMemos, setQuickMemos] = useState(() => {
     const saved = localStorage.getItem('quick_memos_v1');
@@ -296,6 +297,17 @@ export function NotesPanel({
             Back to Overview
           </button>
         </div>
+
+        {/* Holiday Banner (Only for Single Date View where holiday exists) */}
+        {activeHoliday && (
+          <div className="mb-4 bg-gradient-to-r from-primary/10 to-transparent border-l-4 border-primary p-3 rounded-r-xl flex items-center gap-3 animate-in fade-in slide-in-from-left-2 shadow-sm">
+            <span className="text-2xl drop-shadow-sm animate-pulse">{activeHoliday.icon}</span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-primary/80">Special Occasion</p>
+              <p className="text-sm font-semibold text-foreground tracking-tight">{activeHoliday.name}</p>
+            </div>
+          </div>
+        )}
 
         {/* Quick Memos Section */}
         {isSingleDateView && (

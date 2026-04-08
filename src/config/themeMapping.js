@@ -70,11 +70,11 @@ export const monthThemes = {
     image: "https://picsum.photos/id/1022/1200/600.webp", // Aurora borealis
     blobs: ["bg-stone-400", "bg-orange-200", "bg-slate-300"],
   },
-  // December: Holidays and winter, deep reds, greens and gold
+  // December: Cozy Christmas theme
   11: {
     name: "December",
-    image: "https://picsum.photos/id/1025/1200/600.webp", // Pug in blanket
-    blobs: ["bg-red-400", "bg-emerald-400", "bg-amber-200"],
+    image: "/christmas-theme.png", // Custom AI-generated Christmas theme
+    blobs: ["bg-red-600", "bg-emerald-600", "bg-amber-400"],
   },
 };
 
