@@ -4,6 +4,7 @@ import { HeroSection } from './HeroSection';
 import { CalendarHeader } from './CalendarHeader';
 import { CalendarGrid } from './CalendarGrid';
 import { NotesPanel } from './NotesPanel';
+import { Onboarding } from './Onboarding';
 
 /**
  * Main wrapper component for the Calendar UI.
@@ -39,6 +40,12 @@ export function CalendarCard({ calendarState }) {
 
   return (
     <div className="w-full max-w-6xl mx-auto bg-card text-card-foreground rounded-2xl md:rounded-[2rem] shadow-2xl overflow-hidden border border-border/50 backdrop-blur-sm">
+      <Onboarding 
+        calendarState={calendarState} 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        saveNote={saveNote}
+      />
       <div className="grid grid-cols-1 md:grid-cols-12 min-h-[500px] md:h-[85vh] max-h-[800px]">
         {/* Left Side: Hero Image (takes up 4 cols on md, 3 cols on lg) */}
         <HeroSection currentMonth={currentMonth} />

@@ -51,11 +51,13 @@ export function NotesPanel({
   const currentKey = getKey();
   const [savedStatus, setSavedStatus] = useState('saved');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   // Load note text when selection changes
   useEffect(() => {
     setText(notes[currentKey] || '');
     setSavedStatus('saved');
+    setShowWarning(false);
   }, [currentKey]); // Intentionally omitting `notes` so auto-saving doesn't clash with typed text
 
   // Auto-save logic
@@ -72,9 +74,16 @@ export function NotesPanel({
   const handleChange = (e) => {
     setText(e.target.value);
     setSavedStatus('saving');
+    if (showWarning && e.target.value.trim()) setShowWarning(false);
   };
 
   const handleSave = () => {
+    if (!text.trim()) {
+      setShowWarning(true);
+      setTimeout(() => setShowWarning(false), 2000);
+      return;
+    }
+    
     saveNote(currentKey, text);
     setSavedStatus('saved');
     setShowSuccess(true);
@@ -213,7 +222,7 @@ export function NotesPanel({
         <div className="flex bg-background/40 p-1 rounded-xl mb-6 shrink-0 border border-border/40 backdrop-blur-sm self-start">
           <button
             onClick={() => setActiveTab('schedules')}
-            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+            className={`tour-schedules-tab px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'schedules' 
                 ? 'bg-primary text-primary-foreground shadow-sm' 
                 : 'text-muted-foreground hover:bg-border/30 hover:text-foreground'
@@ -230,7 +239,7 @@ export function NotesPanel({
           </button>
           <button
             onClick={() => setActiveTab('diary')}
-            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+            className={`tour-diary-tab px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'diary' 
                 ? 'bg-primary text-primary-foreground shadow-sm' 
                 : 'text-muted-foreground hover:bg-border/30 hover:text-foreground'
@@ -315,7 +324,7 @@ export function NotesPanel({
           </span>
           <button 
             onClick={clearSelection}
-            className="flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-all"
+            className="tour-back-button flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-all"
           >
             <ChevronLeft className="w-3 h-3" />
             Back to Overview
@@ -420,7 +429,7 @@ export function NotesPanel({
         onChange={handleChange}
         disabled={isFutureSingleDate}
         placeholder={isFutureSingleDate ? "Future journal entries are locked..." : (startDate && endDate ? "Plan your schedule for these dates..." : "How was your day? Write in your journal...")}
-        className={`flex-1 w-full resize-none rounded-lg border-none bg-transparent focus:ring-0 p-0 text-foreground placeholder:text-muted-foreground/60 transition-colors focus-visible:outline-none custom-scroll ${isFutureSingleDate ? 'opacity-50 cursor-not-allowed' : ''}`}
+        className={`tour-note-input flex-1 w-full resize-none rounded-lg border-none bg-transparent focus:ring-0 p-0 text-foreground placeholder:text-muted-foreground/60 transition-colors focus-visible:outline-none custom-scroll ${isFutureSingleDate ? 'opacity-50 cursor-not-allowed' : ''}`}
       />
 
       <div className="mt-4 flex justify-between items-center border-t border-border/40 pt-4">
@@ -430,10 +439,12 @@ export function NotesPanel({
         </div>
         <button
           onClick={handleSave}
-          disabled={isFutureSingleDate || showSuccess}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg active:shadow-sm ${
+          disabled={isFutureSingleDate || showSuccess || showWarning}
+          className={`tour-save-button flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg active:shadow-sm ${
             showSuccess 
               ? 'bg-green-500 text-white hover:bg-green-600 scale-95' 
+              : showWarning
+              ? 'bg-amber-500 text-white hover:bg-amber-600 animate-shake'
               : 'bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95'
           } ${isFutureSingleDate ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
         >
@@ -441,6 +452,11 @@ export function NotesPanel({
             <>
               <Check className="w-4 h-4" />
               Saved!
+            </>
+          ) : showWarning ? (
+            <>
+              <X className="w-4 h-4" />
+              Entry is empty!
             </>
           ) : (
             <>

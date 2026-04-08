@@ -19,7 +19,7 @@ export function CalendarGrid({
   activeTab,
 }) {
   return (
-    <div className="w-full flex-1 flex flex-col p-6 max-w-2xl mx-auto">
+    <div className="tour-calendar-grid w-full flex-1 flex flex-col p-6 max-w-2xl mx-auto">
       {/* Weekday headers */}
       <div className="grid grid-cols-7 mb-4">
         {WEEKDAYS.map((day) => (
