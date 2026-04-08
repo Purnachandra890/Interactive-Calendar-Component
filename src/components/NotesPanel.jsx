@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { format } from 'date-fns';
+import { format, isAfter, startOfToday, endOfToday } from 'date-fns';
 import { NotebookPen, Save, Info, ChevronLeft, Zap, Settings2, Check, X, Plus, Pencil, Trash2 } from 'lucide-react';
 import { HOLIDAYS } from '../config/holidays';
 
@@ -18,6 +18,7 @@ export function NotesPanel({
   const [text, setText] = useState('');
   const isMonthView = !startDate && !endDate;
   const isSingleDateView = startDate && !endDate;
+  const isFutureSingleDate = isSingleDateView && isAfter(startDate, endOfToday());
   const activeHoliday = isSingleDateView ? HOLIDAYS[format(startDate, 'MM-dd')] : null;
 
   const [quickMemos, setQuickMemos] = useState(() => {
@@ -80,7 +81,7 @@ export function NotesPanel({
   if (startDate && endDate) {
     title = `${format(startDate, 'MMM d')} - ${format(endDate, 'MMM d')}`;
   } else if (startDate) {
-    title = `Diary: ${format(startDate, 'MMMM d')}`;
+    title = `Journal: ${format(startDate, 'MMMM d')}`;
   } else if (currentMonth) {
     title = `${format(currentMonth, 'MMMM yyyy')} Log`;
   }
@@ -206,23 +207,6 @@ export function NotesPanel({
         {/* Tab Switcher */}
         <div className="flex bg-background/40 p-1 rounded-xl mb-6 shrink-0 border border-border/40 backdrop-blur-sm self-start">
           <button
-            onClick={() => setActiveTab('diary')}
-            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
-              activeTab === 'diary' 
-                ? 'bg-primary text-primary-foreground shadow-sm' 
-                : 'text-muted-foreground hover:bg-border/30 hover:text-foreground'
-            }`}
-          >
-            Daily Diary
-            {diaryTabContent.length > 0 && (
-              <span className={`px-1.5 py-0.5 rounded-full text-[9px] ${
-                activeTab === 'diary' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-border text-muted-foreground'
-              }`}>
-                {diaryTabContent.length}
-              </span>
-            )}
-          </button>
-          <button
             onClick={() => setActiveTab('schedules')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'schedules' 
@@ -239,6 +223,32 @@ export function NotesPanel({
               </span>
             )}
           </button>
+          <button
+            onClick={() => setActiveTab('diary')}
+            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+              activeTab === 'diary' 
+                ? 'bg-primary text-primary-foreground shadow-sm' 
+                : 'text-muted-foreground hover:bg-border/30 hover:text-foreground'
+            }`}
+          >
+            Daily Journal
+            {diaryTabContent.length > 0 && (
+              <span className={`px-1.5 py-0.5 rounded-full text-[9px] ${
+                activeTab === 'diary' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-border text-muted-foreground'
+              }`}>
+                {diaryTabContent.length}
+              </span>
+            )}
+          </button>
+        </div>
+        
+        {/* Tab Descriptions */}
+        <div className="mb-6 px-1 animate-in fade-in slide-in-from-top-1 duration-500">
+          <p className="text-[11px] leading-relaxed text-muted-foreground italic font-medium">
+            {activeTab === 'diary' 
+              ? "Daily Journal helps you track what you did or felt on a particular day." 
+              : "Schedules help you plan your upcoming tasks, events, or activities for specific dates."}
+          </p>
         </div>
         
         <div className="mb-4 flex items-center justify-between shrink-0">
@@ -259,7 +269,7 @@ export function NotesPanel({
               ) : (
                 <div className="space-y-3 animate-in fade-in slide-in-from-left-2 duration-300">
                   {diaryTabContent.length > 0 ? diaryTabContent.map(renderActivityCard) : (
-                    <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No diary entries yet</p>
+                    <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No journal entries yet</p>
                   )}
                 </div>
               )}
@@ -282,7 +292,16 @@ export function NotesPanel({
     <div className="w-full h-full flex flex-col bg-muted/30 border-t md:border-t-0 md:border-l border-border/40 p-6">
         <div className="flex items-center gap-2 mb-6 shrink-0">
           <NotebookPen className="w-5 h-5 text-muted-foreground" />
-          <h3 className="font-semibold text-foreground text-lg">{startDate && endDate ? 'Schedule Overview' : 'Daily Diary'}</h3>
+          <h3 className="font-semibold text-foreground text-lg">{startDate && endDate ? 'Schedule Overview' : 'Daily Journal'}</h3>
+        </div>
+        
+        {/* Section Descriptions */}
+        <div className="mb-4 animate-in fade-in slide-in-from-top-1 duration-500">
+          <p className="text-[11px] leading-relaxed text-muted-foreground italic font-medium">
+            {startDate && endDate 
+              ? "Schedule is a feature where users can plan their upcoming tasks, events, or activities for specific dates."
+              : "It helps users track what they did or felt on a particular day."}
+          </p>
         </div>
         
         <div className="mb-4 flex items-center justify-between">
@@ -309,8 +328,19 @@ export function NotesPanel({
           </div>
         )}
 
+        {/* Future Date Warning */}
+        {isFutureSingleDate && (
+          <div className="mb-4 bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl flex items-center gap-3 animate-in fade-in slide-in-from-left-2 shadow-sm">
+            <Info className="w-5 h-5 text-amber-600" />
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-amber-700">Future Journal</p>
+              <p className="text-xs font-medium text-amber-800 tracking-tight">Journal entries can only be written for today or past dates.</p>
+            </div>
+          </div>
+        )}
+
         {/* Quick Memos Section */}
-        {isSingleDateView && (
+        {isSingleDateView && !isFutureSingleDate && (
           <div className="mb-3 space-y-2 pb-3 border-b border-border/20">
              <div className="flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                <span className="flex items-center gap-1">
@@ -383,8 +413,9 @@ export function NotesPanel({
       <textarea
         value={text}
         onChange={handleChange}
-        placeholder={startDate && endDate ? "Plan your schedule for these dates..." : "How was your day? Write in your diary..."}
-        className="flex-1 w-full resize-none rounded-lg border-none bg-transparent focus:ring-0 p-0 text-foreground placeholder:text-muted-foreground/60 transition-colors focus-visible:outline-none custom-scroll"
+        disabled={isFutureSingleDate}
+        placeholder={isFutureSingleDate ? "Future journal entries are locked..." : (startDate && endDate ? "Plan your schedule for these dates..." : "How was your day? Write in your journal...")}
+        className={`flex-1 w-full resize-none rounded-lg border-none bg-transparent focus:ring-0 p-0 text-foreground placeholder:text-muted-foreground/60 transition-colors focus-visible:outline-none custom-scroll ${isFutureSingleDate ? 'opacity-50 cursor-not-allowed' : ''}`}
       />
 
       <div className="mt-4 flex justify-between items-center border-t border-border/40 pt-4">
@@ -394,10 +425,11 @@ export function NotesPanel({
         </div>
         <button
           onClick={handleSave}
-          className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 px-5 py-2.5 rounded-full text-sm font-semibold transition-all active:scale-95 shadow-md hover:shadow-lg active:shadow-sm"
+          disabled={isFutureSingleDate}
+          className={`flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 px-5 py-2.5 rounded-full text-sm font-semibold transition-all active:scale-95 shadow-md hover:shadow-lg active:shadow-sm ${isFutureSingleDate ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
         >
           <Save className="w-4 h-4" />
-          {startDate && endDate ? 'Save Schedule' : 'Save Diary'}
+          {startDate && endDate ? 'Save Schedule' : 'Save Journal'}
         </button>
       </div>
     </div>
