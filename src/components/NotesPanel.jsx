@@ -89,7 +89,8 @@ export function NotesPanel({
     setShowSuccess(true);
     setTimeout(() => {
       setShowSuccess(false);
-    }, 2000);
+      clearSelection();
+    }, 1500);
   };
 
   let title = "General Activities";

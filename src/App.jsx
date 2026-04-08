@@ -26,7 +26,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen relative p-4 md:p-6 flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen relative p-4 md:p-6 flex items-start lg:items-center justify-center overflow-y-auto lg:overflow-hidden">
       {/* 
         Dynamic Image-based Background
         This replaces the old static blobs with an immersive blurred representation
