@@ -50,6 +50,7 @@ export function NotesPanel({
 
   const currentKey = getKey();
   const [savedStatus, setSavedStatus] = useState('saved');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Load note text when selection changes
   useEffect(() => {
@@ -76,6 +77,10 @@ export function NotesPanel({
   const handleSave = () => {
     saveNote(currentKey, text);
     setSavedStatus('saved');
+    setShowSuccess(true);
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 2000);
   };
 
   let title = "General Activities";
@@ -425,11 +430,24 @@ export function NotesPanel({
         </div>
         <button
           onClick={handleSave}
-          disabled={isFutureSingleDate}
-          className={`flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 px-5 py-2.5 rounded-full text-sm font-semibold transition-all active:scale-95 shadow-md hover:shadow-lg active:shadow-sm ${isFutureSingleDate ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
+          disabled={isFutureSingleDate || showSuccess}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg active:shadow-sm ${
+            showSuccess 
+              ? 'bg-green-500 text-white hover:bg-green-600 scale-95' 
+              : 'bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95'
+          } ${isFutureSingleDate ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
         >
-          <Save className="w-4 h-4" />
-          {startDate && endDate ? 'Save Schedule' : 'Save Journal'}
+          {showSuccess ? (
+            <>
+              <Check className="w-4 h-4" />
+              Saved!
+            </>
+          ) : (
+            <>
+              <Save className="w-4 h-4" />
+              {startDate && endDate ? 'Save Schedule' : 'Save Journal'}
+            </>
+          )}
         </button>
       </div>
     </div>

@@ -13,7 +13,7 @@ import { NotesPanel } from './NotesPanel';
  */
 export function CalendarCard({ calendarState }) {
   // Destructure all calendar functionalities and state from the provided prop
-  const [activeTab, setActiveTab] = React.useState('diary');
+  const [activeTab, setActiveTab] = React.useState('schedules');
   
   const {
     currentMonth,
