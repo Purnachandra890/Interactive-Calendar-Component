@@ -1,15 +1,16 @@
 import { format } from 'date-fns';
 import { getThemeForDate } from '../config/themeMapping';
+import { useCalendarContext } from '../context/CalendarContext';
 
 /**
  * HeroSection Component
  * Displays a premium header image that dynamically updates based on the selected month.
  * Provides a strong visual identity for the wall-calendar aesthetic.
- * 
- * @param {Object} props
- * @param {Date} props.currentMonth - The currently viewed month in the calendar
  */
-export function HeroSection({ currentMonth }) {
+export function HeroSection() {
+  // Pull currentMonth directly from context
+  const { currentMonth } = useCalendarContext();
+  
   // Retrieve the theme mapping for the currently active month to get the mapped image URL
   const theme = getThemeForDate(currentMonth);
   

@@ -1,26 +1,42 @@
 import { format } from 'date-fns';
 import { DayCell } from './DayCell';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCalendarContext } from '../context/CalendarContext';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export function CalendarGrid({
-  currentMonth,
-  daysInMonth,
-  startDate,
-  endDate,
-  hoverDate,
-  isSelectedStart,
-  isSelectedEnd,
-  isInRange,
-  onDateClick,
-  onDateHover,
-  notes,
-  activeTab,
-}) {
+/**
+ * CalendarGrid Component
+ * 
+ * The primary visualization engine for the calendar interface.
+ * Calculates the matrix of day cells, actively evaluates intersection logic to identify
+ * which days have existing data/notes saved, and maps them to the `<DayCell />` component.
+ * Applies framer-motion logic to yield a smooth CSS transform whenever the month shifts.
+ * 
+ * @param {Object} props
+ */
+export function CalendarGrid() {
+  const {
+    currentMonth,
+    getDaysInMonth,
+    startDate,
+    endDate,
+    hoverDate,
+    isSelectedStart,
+    isSelectedEnd,
+    isInRange,
+    onDateClick,
+    onDateHover,
+    notes,
+    activeTab,
+  } = useCalendarContext();
+
+  const daysInMonth = getDaysInMonth();
+
   return (
     <div className="tour-calendar-grid w-full flex-1 flex flex-col p-6 max-w-2xl mx-auto">
-      {/* Weekday headers */}
+      
+      {/* Weekday headers mapping static abbreviations */}
       <div className="grid grid-cols-7 mb-4">
         {WEEKDAYS.map((day) => (
           <div key={day} className="text-center text-xs font-semibold tracking-wider text-muted-foreground uppercase py-2">
@@ -29,9 +45,8 @@ export function CalendarGrid({
         ))}
       </div>
 
-      {/* Days grid with animation container for transitions between months */}
+      {/* Days grid paired with AnimatePresence to create native sliding transitions on month changes */}
       <div className="flex-1 w-full relative">
-        {/* We use a simple grid here */}
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={currentMonth.toString()}
@@ -44,6 +59,8 @@ export function CalendarGrid({
             {daysInMonth.map((day) => {
               const dayStr = format(day, 'yyyy-MM-dd');
               let dayNoteStr = '';
+              
+              // Expensive mapping check: Identify if the target day contains relevant notes based strictly on the current tab context.
               const hasNote = Object.keys(notes).some(key => {
                 if (activeTab === 'diary' && key === dayStr && notes[key].trim() !== '') {
                   dayNoteStr = notes[key];

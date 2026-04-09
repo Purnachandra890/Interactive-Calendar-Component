@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { CalendarCard } from './components/CalendarCard';
 import { BackgroundAmbiance } from './components/BackgroundAmbiance';
-import { useCalendar } from './hooks/useCalendar';
+import { useCalendarContext } from './context/CalendarContext';
 import { getThemeForDate, monthThemes } from './config/themeMapping';
 
 /**
@@ -10,11 +10,11 @@ import { getThemeForDate, monthThemes } from './config/themeMapping';
  * can dynamically react to the month selected by the user.
  */
 function App() {
-  // Initialize calendar state at the top level
-  const calendarState = useCalendar();
+  // Pull currentMonth from our global context instead of a local hook
+  const { currentMonth } = useCalendarContext();
   
   // Extract custom theme colors depending on the selected month
-  const theme = getThemeForDate(calendarState.currentMonth);
+  const theme = getThemeForDate(currentMonth);
 
   // Preload all month images quietly in the background on initial mount!
   // This guarantees absolutely instant, zero-delay rendering when a user clicks 'Next Month'
@@ -36,8 +36,8 @@ function App() {
       
       <div className="z-10 w-full relative">
         <main>
-          {/* Provide the hoisted calendar state to the main card */}
-          <CalendarCard calendarState={calendarState} />
+          {/* CalendarCard now connects to Context directly! */}
+          <CalendarCard />
         </main>
       </div>
     </div>

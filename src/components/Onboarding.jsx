@@ -2,12 +2,14 @@ import { useEffect, useRef } from 'react';
 import { driver } from 'driver.js';
 import 'driver.js/dist/driver.css';
 import { startOfToday, addDays, format } from 'date-fns';
+import { useCalendarContext } from '../context/CalendarContext';
 
-
-export function Onboarding({ calendarState, activeTab, setActiveTab, saveNote }) {
-  // Use a ref to always have access to the latest calendarState in driver.js callbacks
-  const stateRef = useRef(calendarState);
-  stateRef.current = calendarState;
+export function Onboarding() {
+  const contextProps = useCalendarContext();
+  const { setActiveTab } = contextProps;
+  // Use a ref to always have access to the latest state in driver.js callbacks
+  const stateRef = useRef(contextProps);
+  stateRef.current = contextProps;
 
   useEffect(() => {
     // Check if onboarding was already shown
