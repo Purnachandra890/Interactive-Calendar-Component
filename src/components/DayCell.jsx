@@ -41,14 +41,24 @@ export function DayCell({
     quickMemos = initialMemos;
   }
 
+  const dayLabel = format(day, 'MMMM d, yyyy');
+  const isSelected = isSelectedStart || isSelectedEnd;
+
   return (
     <button
       onClick={() => onDateClick(day)}
       onMouseEnter={() => onDateHover(day)}
+      aria-label={dayLabel}
+      aria-selected={isSelected}
       className={cn(
         "relative w-full h-14 sm:h-16 flex flex-col items-center justify-start pt-1.5 sm:pt-2 text-sm transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 hover:z-50 group",
         !_isSameMonth && "text-muted-foreground/40 opacity-50",
         _isSameMonth && "text-foreground font-medium",
+        // Beginner-friendly class names for testing
+        isSelectedStart && "range-start",
+        isSelectedEnd && "range-end",
+        (isSelectedStart || isSelectedEnd) && "selected",
+        isInRange && "in-range",
       )}
     >
       {/* Main Date Area: Precision Stack */}
