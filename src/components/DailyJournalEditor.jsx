@@ -95,7 +95,7 @@ export function DailyJournalEditor({
   }
 
   return (
-    <div className="w-full h-full flex flex-col bg-muted/30 border-t md:border-t-0 md:border-l border-border/40 p-6">
+    <div className="w-full flex-1 min-h-0 flex flex-col bg-muted/30 md:border-l border-border/40 p-6">
         
         {/* Editor Title Declaration */}
         <div className="flex items-center gap-2 mb-6 shrink-0">

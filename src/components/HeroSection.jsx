@@ -15,7 +15,7 @@ export function HeroSection() {
   const theme = getThemeForDate(currentMonth);
   
   return (
-    <div className="relative w-full h-48 lg:h-full col-span-12 lg:col-span-3 overflow-hidden bg-slate-200">
+    <div className="relative w-full h-48 lg:h-full col-span-1 md:col-span-12 lg:col-span-3 overflow-hidden bg-slate-200">
       {/* 
         The hero image with transition classes.
         Using opacity and transform gives a subtle, premium fade/zoom effect on image change.

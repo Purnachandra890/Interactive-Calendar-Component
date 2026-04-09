@@ -33,7 +33,7 @@ export function CalendarHeader() {
         {/* 'Jump to Today' Utility Button */}
         <button
           onClick={onJumpToToday}
-          className="p-2 hover:bg-muted text-muted-foreground hover:text-foreground rounded-full transition-colors flex items-center gap-2 text-sm font-medium mr-2"
+          className="p-2 hover:bg-muted text-muted-foreground hover:text-foreground rounded-full transition-colors flex items-center gap-2 text-sm font-medium mr-2 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Jump to today"
         >
           <CalendarIcon className="w-4 h-4" />
@@ -43,7 +43,7 @@ export function CalendarHeader() {
         {/* Reversal Arrow */}
         <button
           onClick={onPrevMonth}
-          className="p-2 hover:bg-muted/80 rounded-full transition-colors"
+          className="p-2 hover:bg-muted/80 rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Previous month"
         >
           <ChevronLeft className="w-5 h-5 text-foreground" />
@@ -52,7 +52,7 @@ export function CalendarHeader() {
         {/* Forward Arrow */}
         <button
           onClick={onNextMonth}
-          className="p-2 hover:bg-muted/80 rounded-full transition-colors"
+          className="p-2 hover:bg-muted/80 rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Next month"
         >
           <ChevronRight className="w-5 h-5 text-foreground" />

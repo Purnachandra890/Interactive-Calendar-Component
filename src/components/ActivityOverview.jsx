@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import { NotebookPen } from 'lucide-react';
 import { ActivityCard } from './ActivityCard';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCalendarContext } from '../context/CalendarContext';
 
 /**
@@ -79,7 +80,7 @@ export function ActivityOverview() {
   const diaryTabContent = [...diaryEntries, ...general];
 
   return (
-    <div className="w-full h-full flex flex-col bg-muted/30 border-t md:border-t-0 md:border-l border-border/40 p-6 overflow-hidden">
+    <div className="w-full flex-1 min-h-0 flex flex-col bg-muted/30 md:border-l border-border/40 p-6 overflow-hidden">
       
       {/* Title Bar Context */}
       <div className="flex items-center gap-2 mb-4 shrink-0">
@@ -143,25 +144,39 @@ export function ActivityOverview() {
       {/* Scrollable Main Layout Area for Items Mapping */}
       <div className="flex-1 w-full overflow-y-auto space-y-6 pr-2 -mr-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent custom-scroll">
         {groupedNotes.length > 0 ? (
-          <>
+          <AnimatePresence mode="wait">
             {activeTab === 'schedules' ? (
-              <div className="space-y-3 animate-in fade-in slide-in-from-right-2 duration-300">
+              <motion.div 
+                key="schedules-tab"
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-3"
+              >
                 {schedules.length > 0 ? schedules.map(item => (
                   <ActivityCard key={item.key} item={item} setSelection={setSelection} deleteNote={deleteNote} />
                 )) : (
                   <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No schedules for this month</p>
                 )}
-              </div>
+              </motion.div>
             ) : (
-              <div className="space-y-3 animate-in fade-in slide-in-from-left-2 duration-300">
+              <motion.div 
+                key="diary-tab"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-3"
+              >
                 {diaryTabContent.length > 0 ? diaryTabContent.map(item => (
                   <ActivityCard key={item.key} item={item} setSelection={setSelection} deleteNote={deleteNote} />
                 )) : (
                   <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No journal entries yet</p>
                 )}
-              </div>
+              </motion.div>
             )}
-          </>
+          </AnimatePresence>
         ) : (
            // Empty Application State Configuration
            <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-40 py-12">

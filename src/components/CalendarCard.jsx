@@ -19,10 +19,10 @@ export function CalendarCard() {
         <HeroSection />
 
         {/* Middle + Right Side: Calendar & Notes */}
-        <div className="col-span-1 col-span-12 lg:col-span-9 flex flex-col md:flex-row md:h-full relative">
+        <div className="col-span-1 md:col-span-12 lg:col-span-9 flex flex-col md:flex-row md:h-full relative min-h-0">
           
           {/* Main Calendar Area */}
-          <div className="flex-1 flex flex-col min-w-[320px]">
+          <div className="flex-1 flex flex-col min-w-[320px] min-h-0">
             <CalendarHeader />
             
             <div className="flex-1 flex items-stretch py-4">
@@ -31,7 +31,7 @@ export function CalendarCard() {
           </div>
 
           {/* Side/Bottom Panel for Notes */}
-          <div className="w-full md:w-72 lg:w-80 shrink-0 md:h-full relative">
+          <div className="w-full md:w-72 lg:w-80 shrink-0 md:h-full relative flex flex-col min-h-0 border-t md:border-t-0 border-border/40">
             <NotesPanel />
           </div>
         </div>
