@@ -18,6 +18,45 @@ https://youtu.be/wscy6og0_mw
 
 ---
 
+# Interactive Calendar Component
+
+A polished, responsive wall-calendar inspired React.js component that allows users to select date ranges, manage notes, and interact with a visually rich calendar UI.
+
+---
+
+## Live Demo
+
+View Live Project  
+https://interactive-calendar-component-nine.vercel.app/
+
+---
+
+## Demo Video
+
+Watch Demo  
+https://youtu.be/wscy6og0_mw
+
+---
+
+## How to Run Locally
+
+```bash
+# Clone the repository
+git clone https://github.com/Purnachandra890/Interactive-Calendar-Component.git
+
+# Navigate to the project directory
+cd Interactive-Calendar-Component
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+
+```
+
+---
+
 ##  Project Overview
 
 This project is built as part of the **Frontend Engineering Challenge: Interactive Calendar Component**.
