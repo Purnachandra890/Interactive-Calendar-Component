@@ -14,14 +14,24 @@ The main objective was to transform a static wall calendar design into a fully i
 
 This project is designed to show strong frontend skills in these key areas:
 
-### 1. Code Quality
+### 1. Robust Testing Suite (Vitest & React Testing Library)
+
+* **Comprehensive Coverage:** Implemented 7 advanced test cases covering UI components, complex user workflows, and form error validations.
+* **Integration Testing ("The User Flow"):** Tests a real-world scenario (clicking a date -> typing a note -> saving -> verifying UI changes), proving that the application state is flawless.
+* **Accessibility (a11y) Validated:** Custom CSS classes (`selected`, `range-start`) and Aria-labels (`aria-selected`) were added to guarantee elements are readable by tools and screen-readers.
+
+<img width="1172" height="629" alt="Screenshot 2026-04-09 193855" src="https://github.com/user-attachments/assets/e0378906-7bce-4da4-a07e-4257c6c6fae4" />
+
+## For More Details About Testing Read "README_TESTING.md"
+
+### 2. Code Quality
 
 * Code is clean and easy to understand
 * Uses clear variable names and helpful comments
 * Each part of the code does only one job (Single Responsibility Principle)
 * Easy to maintain and update
 
-### 2. Component Architecture
+### 3. Component Architecture
 
 * Large components are broken into smaller, reusable parts
 * Example:
@@ -31,7 +41,7 @@ This project is designed to show strong frontend skills in these key areas:
   * DailyJournalEditor
 * This makes the code easier to manage and reuse
 
-### 3. Project Structure
+### 4. Project Structure
 
 * Files are well organized into folders like:
 
@@ -41,20 +51,20 @@ This project is designed to show strong frontend skills in these key areas:
   * `/config`
 * Logic is separated properly, so the project can scale easily
 
-### 4. State Management
+### 5. State Management
 
 * Avoided passing data through too many components (no prop drilling)
 * Used React Context (`CalendarContext`) to manage data centrally
 * Makes data handling clean and simple
 
-### 5. UI/UX Details
+### 6. UI/UX Details
 
 * Focus on user experience and accessibility
 * Keyboard navigation is supported (focus styles added)
 * Smooth animations using Framer Motion
 * Forms are validated to prevent user errors
 
-### 6. Responsive Design
+### 7. Responsive Design
 
 * Works well on all screen sizes (mobile, tablet, desktop)
 * Uses Tailwind CSS with a mobile-first approach
