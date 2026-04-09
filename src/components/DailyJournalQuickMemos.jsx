@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Zap, Settings2, Check, X, Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 /**
  * DailyJournalQuickMemos Component
@@ -25,11 +26,17 @@ export function DailyJournalQuickMemos({ onAddMemo }) {
   // Toggles the settings menu to enable deleting or appending custom logs
   const [isEditingMemos, setIsEditingMemos] = useState(false);
   const [newMemoText, setNewMemoText] = useState('');
+  const [confirmDeleteIdx, setConfirmDeleteIdx] = useState(null);
 
   // Auto-sync custom logs back to local storage the exact moment the array mutates
   useEffect(() => {
     localStorage.setItem('common_logs_v2', JSON.stringify(quickMemos));
   }, [quickMemos]);
+
+  const handleDelete = (idx) => {
+    setQuickMemos(prev => prev.filter((_, i) => i !== idx));
+    setConfirmDeleteIdx(null);
+  };
 
   return (
     <div className="mb-3 space-y-2 pb-3 border-b border-border/20">
@@ -40,7 +47,10 @@ export function DailyJournalQuickMemos({ onAddMemo }) {
             <Zap className="w-3 h-3"/> Common Logs
          </span>
          <button 
-           onClick={() => setIsEditingMemos(!isEditingMemos)} 
+           onClick={() => {
+             setIsEditingMemos(!isEditingMemos);
+             setConfirmDeleteIdx(null);
+           }} 
            className="hover:text-foreground transition-colors flex items-center gap-1"
            title="Manage Common Logs"
          >
@@ -51,7 +61,11 @@ export function DailyJournalQuickMemos({ onAddMemo }) {
        {/* Scrollable Container Mapping the Persisted Array */}
        <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
          {quickMemos.map((memo, idx) => (
-            <div key={idx} className="group flex items-center bg-background/50 hover:bg-background border border-border/50 rounded-full text-xs transition-all shadow-sm">
+            <motion.div 
+              layout
+              key={idx} 
+              className="group flex items-center bg-background/50 hover:bg-background border border-border/50 rounded-full text-xs transition-all shadow-sm overflow-hidden"
+            >
               <button 
                 onClick={() => onAddMemo(memo)}
                 className="px-3 py-1.5 hover:text-primary transition-colors text-left font-medium"
@@ -60,16 +74,47 @@ export function DailyJournalQuickMemos({ onAddMemo }) {
               </button>
               
               {/* Conditionally Render the Delete specific to this iteration during 'edit mode' */}
-              {isEditingMemos && (
-                <button 
-                   className="pr-3 pl-1 py-1.5 text-muted-foreground hover:text-destructive transition-colors" 
-                   onClick={() => setQuickMemos(prev => prev.filter((_, i) => i !== idx))}
-                   title="Remove"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              )}
-            </div>
+              <AnimatePresence mode="wait">
+                {isEditingMemos && (
+                  confirmDeleteIdx === idx ? (
+                    <motion.div 
+                      key="confirm"
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{ width: 'auto', opacity: 1 }}
+                      exit={{ width: 0, opacity: 0 }}
+                      className="flex items-center bg-destructive/10 h-full border-l border-destructive/20"
+                    >
+                      <button 
+                        onClick={() => handleDelete(idx)}
+                        className="px-2 h-full text-destructive hover:bg-destructive hover:text-white transition-colors"
+                        title="Confirm"
+                      >
+                        <Check className="w-3 h-3" />
+                      </button>
+                      <button 
+                        onClick={() => setConfirmDeleteIdx(null)}
+                        className="px-2 h-full text-muted-foreground hover:bg-muted transition-colors"
+                        title="Cancel"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <motion.button 
+                       key="delete-btn"
+                       initial={{ opacity: 0 }}
+                       animate={{ opacity: 1 }}
+                       exit={{ opacity: 0 }}
+                       className="pr-3 pl-1 py-1.5 text-muted-foreground hover:text-destructive transition-colors border-l border-transparent" 
+                       onClick={() => setConfirmDeleteIdx(idx)}
+                       title="Remove"
+                    >
+                      <X className="w-3 h-3" />
+                    </motion.button>
+                  )
+                )}
+              </AnimatePresence>
+            </motion.div>
          ))}
          
          {/* Inline Input Field to dynamically append fresh elements to the state array */}

@@ -22,7 +22,7 @@ export function CalendarCard() {
         <div className="col-span-1 md:col-span-12 lg:col-span-9 flex flex-col md:flex-row md:h-full relative min-h-0">
           
           {/* Main Calendar Area */}
-          <div className="flex-1 flex flex-col min-w-[320px] min-h-0">
+          <div className="flex-1 flex flex-col min-w-0 md:min-w-[320px] min-h-0">
             <CalendarHeader />
             
             <div className="flex-1 flex items-stretch py-4">

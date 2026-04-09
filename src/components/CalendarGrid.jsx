@@ -34,7 +34,7 @@ export function CalendarGrid() {
   const daysInMonth = getDaysInMonth();
 
   return (
-    <div className="tour-calendar-grid w-full flex-1 flex flex-col p-6 max-w-2xl mx-auto">
+    <div className="tour-calendar-grid w-full flex-1 flex flex-col p-4 md:p-6 max-w-2xl mx-auto">
       
       {/* Weekday headers mapping static abbreviations */}
       <div className="grid grid-cols-7 mb-4">

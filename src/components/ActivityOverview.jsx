@@ -80,7 +80,7 @@ export function ActivityOverview() {
   const diaryTabContent = [...diaryEntries, ...general];
 
   return (
-    <div className="w-full flex-1 min-h-0 flex flex-col bg-muted/30 md:border-l border-border/40 p-6 overflow-hidden">
+    <div className="w-full flex-1 min-h-0 flex flex-col bg-muted/30 md:border-l border-border/40 p-4 md:p-6 overflow-hidden">
       
       {/* Title Bar Context */}
       <div className="flex items-center gap-2 mb-4 shrink-0">

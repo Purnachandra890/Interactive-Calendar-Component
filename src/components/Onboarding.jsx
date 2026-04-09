@@ -26,9 +26,18 @@ export function Onboarding() {
         const driverObj = driver({
           showProgress: true,
           animate: true,
-          allowClose: true,
+          allowClose: false,
           smoothScroll: true,
           popoverClass: 'driver-onboarding-theme',
+          onPopoverRender: (popover) => {
+            const closeBtn = popover.wrapper.querySelector('.driver-popover-close-btn');
+            if (closeBtn) {
+              closeBtn.style.display = 'block';
+              closeBtn.addEventListener('click', () => {
+                driverObj.destroy();
+              });
+            }
+          },
           steps: [
             {
               popover: {
