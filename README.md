@@ -1,24 +1,24 @@
-# 📅 Interactive Calendar Component
+#  Interactive Calendar Component
 
 A polished, responsive wall-calendar inspired React.js component that allows users to select date ranges, manage notes, and interact with a visually rich calendar UI.
 
 ---
 
-## 🚀 Live Demo
+##  Live Demo
 
-👉 **View Live Project**  
+ **View Live Project**  
 https://interactive-calendar-component-nine.vercel.app/
 
 ---
 
-## 🎥 Demo Video
+##  Demo Video
 
-👉 **Watch Demo**  
+ **Watch Demo**  
 https://youtu.be/wscy6og0_mw
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 This project is built as part of the **Frontend Engineering Challenge: Interactive Calendar Component**.
 
@@ -26,9 +26,9 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🗓️ 1. Wall Calendar Aesthetic
+###  1. Wall Calendar Aesthetic
 
 - Clean and modern UI inspired by a physical wall calendar  
 - Dedicated hero image section for strong visual appeal  
@@ -36,7 +36,7 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ---
 
-### 📍 2. Date Range Selection
+###  2. Date Range Selection
 
 - Users can select a start date and an end date  
 - Clear visual states for:
@@ -47,7 +47,7 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ---
 
-### 📝 3. Notes Section
+###  3. Notes Section
 
 - Users can add notes for:
   - Selected date range  
@@ -56,7 +56,7 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ---
 
-### 📱 4. Fully Responsive Design
+###  4. Fully Responsive Design
 
 #### Desktop
 
@@ -70,7 +70,7 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ---
 
-## 🌟 Extra Features (To Stand Out)
+##  Extra Features (To Stand Out)
 
 - Dynamic background/theme based on the selected month  
 - Custom monthly visuals (e.g., ocean, greenery, sky themes)  
@@ -80,7 +80,7 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Framework:** React  
 - **Styling:** Tailwind CSS  
@@ -89,7 +89,7 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ---
 
-## ⚙️ How to Run Locally
+##  How to Run Locally
 
 ```bash
 # Clone the repository
