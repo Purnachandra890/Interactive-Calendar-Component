@@ -31,7 +31,7 @@ export function DayCell({
 }) {
   const _isToday = isToday(day);
   const _isSameMonth = isSameMonth(day, currentMonth);
-  const holiday = _isSameMonth ? HOLIDAYS[format(day, 'MM-dd')] : null;
+  const holiday = _isSameMonth ? HOLIDAYS[format(day, 'yyyy-MM-dd')] : null;
   const hStyle = holiday ? getHolidayStyles(holiday.type) : null;
 
   let initialMemos = dayNote ? dayNote.split('\n').map(l => l.trim()).filter(l => l.length > 0) : [];

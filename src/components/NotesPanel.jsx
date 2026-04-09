@@ -20,7 +20,7 @@ export function NotesPanel({
   const isMonthView = !startDate && !endDate;
   const isSingleDateView = startDate && !endDate;
   const isFutureSingleDate = isSingleDateView && isAfter(startDate, endOfToday());
-  const activeHoliday = isSingleDateView ? HOLIDAYS[format(startDate, 'MM-dd')] : null;
+  const activeHoliday = isSingleDateView ? HOLIDAYS[format(startDate, 'yyyy-MM-dd')] : null;
 
   const [quickMemos, setQuickMemos] = useState(() => {
     const saved = localStorage.getItem('quick_memos_v1');
