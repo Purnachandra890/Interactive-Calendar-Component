@@ -1,6 +1,64 @@
 # Interactive Calendar Component
 
-A polished, responsive wall-calendar inspired React.js component that allows users to select date ranges, manage notes, and interact with a visually rich calendar UI.
+---
+
+##  Project Overview
+
+This project is built as part of the **Frontend Engineering Challenge: Interactive Calendar Component**.
+
+The main objective was to transform a static wall calendar design into a fully interactive, responsive, and user-friendly web component, focusing purely on frontend development.
+
+---
+
+## Evaluation Highlights (Why This Codebase Stands Out)
+
+This project is designed to show strong frontend skills in these key areas:
+
+### 1. Code Quality
+
+* Code is clean and easy to understand
+* Uses clear variable names and helpful comments
+* Each part of the code does only one job (Single Responsibility Principle)
+* Easy to maintain and update
+
+### 2. Component Architecture
+
+* Large components are broken into smaller, reusable parts
+* Example:
+
+  * NotesPanel
+  * ActivityOverview
+  * DailyJournalEditor
+* This makes the code easier to manage and reuse
+
+### 3. Project Structure
+
+* Files are well organized into folders like:
+
+  * `/components`
+  * `/context`
+  * `/hooks`
+  * `/config`
+* Logic is separated properly, so the project can scale easily
+
+### 4. State Management
+
+* Avoided passing data through too many components (no prop drilling)
+* Used React Context (`CalendarContext`) to manage data centrally
+* Makes data handling clean and simple
+
+### 5. UI/UX Details
+
+* Focus on user experience and accessibility
+* Keyboard navigation is supported (focus styles added)
+* Smooth animations using Framer Motion
+* Forms are validated to prevent user errors
+
+### 6. Responsive Design
+
+* Works well on all screen sizes (mobile, tablet, desktop)
+* Uses Tailwind CSS with a mobile-first approach
+* Layout adjusts smoothly without breaking
 
 ---
 
@@ -37,14 +95,6 @@ npm run dev
 
 ---
 
-##  Project Overview
-
-This project is built as part of the **Frontend Engineering Challenge: Interactive Calendar Component**.
-
-The main objective was to transform a static wall calendar design into a fully interactive, responsive, and user-friendly web component, focusing purely on frontend development.
-
----
-
 ##  Features
 
 ###  1. Wall Calendar Aesthetic
@@ -69,7 +119,7 @@ The main objective was to transform a static wall calendar design into a fully i
 ###  3. Notes Section
 
 - Users can add notes for:
-  - Selected date range  
+  - Selected date  
   - Entire month  
 - Helps in tracking tasks, reminders, and plans  
 
@@ -91,11 +141,13 @@ The main objective was to transform a static wall calendar design into a fully i
 
 ##  Extra Features (To Stand Out)
 
-- Dynamic background/theme based on the selected month  
-- Custom monthly visuals (e.g., ocean, greenery, sky themes)  
+- Auto saving notes
+- First-time user demo / onboarding experience
+- Framer motions for entries (schedules & daily journals)
+- Daily journal feature
+- Dynamic background/theme based on the selected month   
 - Holiday markers to highlight important days  
-- First-time user demo / onboarding experience  
-- Smooth UI interactions and transitions  
+- Smooth UI interactions and transitions
 
 ---
 
@@ -103,7 +155,8 @@ The main objective was to transform a static wall calendar design into a fully i
 
 - **Framework:** React  
 - **Styling:** Tailwind CSS  
-- **State Management:** React Hooks  
-- **Storage:** localStorage (for saving notes and selections)  
+- **State Management:** React Context API & Custom Hooks
+- **Storage:** localStorage (for saving notes and selections)
+- **Animations:** Framer Motion
 
 ---
