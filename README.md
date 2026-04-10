@@ -130,7 +130,7 @@ npm run dev
 ###  3. Notes & Tasks Planner
 
 - Users can write free-form **Notes** for a selected single date or a multi-day event.
-- Users can toggle a dedicated **Tasks** mode to build a chronological daily to-do list.
+- Users can toggle a dedicated **Tasks** mode to build a chronological daily **To-Do list**.
 - Includes inline editing, native OS time-picker integration, and deletion safety checks.
 - Helps seamlessly organize checklists, reminders, and daily journaling.  
 
