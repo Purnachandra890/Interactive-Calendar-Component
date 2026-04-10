@@ -87,7 +87,7 @@ export function Onboarding() {
               element: '.tour-note-input',
               popover: {
                 title: 'Write an Entry',
-                description: 'Use this area to plan your schedule or write a journal entry for the dates you just selected.',
+                description: 'Use this area to write free-form notes for the dates you just selected.',
                 side: 'top',
                 align: 'center'
               },

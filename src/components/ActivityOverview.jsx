@@ -98,7 +98,7 @@ export function ActivityOverview() {
               : 'text-muted-foreground hover:bg-border/30 hover:text-foreground'
           }`}
         >
-          Schedules
+          Event Notes
           {schedules.length > 0 && (
             <span className={`px-1.5 py-0.5 rounded-full text-[9px] ${
               activeTab === 'schedules' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-border text-muted-foreground'
@@ -115,7 +115,7 @@ export function ActivityOverview() {
               : 'text-muted-foreground hover:bg-border/30 hover:text-foreground'
           }`}
         >
-          Daily Journal
+          Daily Notes
           {diaryTabContent.length > 0 && (
             <span className={`px-1.5 py-0.5 rounded-full text-[9px] ${
               activeTab === 'diary' ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-border text-muted-foreground'
@@ -130,8 +130,8 @@ export function ActivityOverview() {
       <div className="mb-6 px-1 animate-in fade-in slide-in-from-top-1 duration-500">
         <p className="text-[11px] leading-relaxed text-muted-foreground italic font-medium">
           {activeTab === 'diary' 
-            ? "Daily Journal helps you track what you did or felt on a particular day." 
-            : "Schedules help you plan your upcoming tasks, events, or activities for specific dates."}
+            ? "Access your Daily Notes for specific single days." 
+            : "Review Event Notes detailing plans across multiple consecutive dates."}
         </p>
       </div>
       
@@ -157,7 +157,7 @@ export function ActivityOverview() {
                 {schedules.length > 0 ? schedules.map(item => (
                   <ActivityCard key={item.key} item={item} setSelection={setSelection} deleteNote={deleteNote} />
                 )) : (
-                  <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No schedules for this month</p>
+                  <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No event notes for this month</p>
                 )}
               </motion.div>
             ) : (
@@ -172,7 +172,7 @@ export function ActivityOverview() {
                 {diaryTabContent.length > 0 ? diaryTabContent.map(item => (
                   <ActivityCard key={item.key} item={item} setSelection={setSelection} deleteNote={deleteNote} />
                 )) : (
-                  <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No journal entries yet</p>
+                  <p className="text-xs text-center text-muted-foreground py-8 italic uppercase tracking-wider opacity-60">No daily notes yet</p>
                 )}
               </motion.div>
             )}

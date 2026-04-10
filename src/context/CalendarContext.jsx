@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useCalendar } from '../hooks/useCalendar';
 import { useNotes } from '../hooks/useNotes';
+import { useTasks } from '../hooks/useTasks';
 
 // 1. Create the Context
 const CalendarContext = createContext();
@@ -10,6 +11,7 @@ export function CalendarProvider({ children }) {
   // Initialize our custom hooks inside the Provider
   const calendarState = useCalendar();
   const notesState = useNotes();
+  const tasksState = useTasks();
   
   // We can also hoist UI-specific state here that many components need
   const [activeTab, setActiveTab] = useState('schedules');
@@ -18,6 +20,7 @@ export function CalendarProvider({ children }) {
   const value = {
     ...calendarState,
     ...notesState,
+    ...tasksState,
     activeTab,
     setActiveTab,
   };

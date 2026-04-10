@@ -39,6 +39,7 @@ This project is designed to show strong frontend skills in these key areas:
   * NotesPanel
   * ActivityOverview
   * DailyJournalEditor
+  * DailyTasksEditor
 * This makes the code easier to manage and reuse
 
 ### 4. Project Structure
@@ -126,12 +127,12 @@ npm run dev
 
 ---
 
-###  3. Notes Section
+###  3. Notes & Tasks Planner
 
-- Users can add notes for:
-  - Selected date  
-  - Entire month  
-- Helps in tracking tasks, reminders, and plans  
+- Users can write free-form **Notes** for a selected single date or a multi-day event.
+- Users can toggle a dedicated **Tasks** mode to build a chronological daily to-do list.
+- Includes inline editing, native OS time-picker integration, and deletion safety checks.
+- Helps seamlessly organize checklists, reminders, and daily journaling.  
 
 ---
 
@@ -153,8 +154,8 @@ npm run dev
 
 - Auto saving notes
 - First-time user demo / onboarding experience
-- Framer motions for entries (schedules & daily journals)
-- Daily journal feature
+- Framer motions for entries (event notes, daily notes, & tasks)
+- Built-in time-based To-Do list scheduler for individual days
 - Dynamic background/theme based on the selected month   
 - Holiday markers to highlight important days  
 - Smooth UI interactions and transitions
