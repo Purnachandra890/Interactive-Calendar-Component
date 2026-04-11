@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { isBefore, startOfToday } from 'date-fns';
-import { Plus, Trash2, Check, Clock, X, Pencil } from 'lucide-react';
+import { Plus, Trash2, Check, Clock, X, Pencil, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCalendarContext } from '../context/CalendarContext';
 import { CustomTimePicker } from './CustomTimePicker';
@@ -74,13 +74,25 @@ export function DailyTasksEditor({ currentKey }) {
                <div className="hidden sm:block">
                  <CustomTimePicker value={newTaskTime} onChange={setNewTaskTime} />
                </div>
-               <input
-                 type="time"
-                 value={newTaskTime}
-                 onChange={(e) => setNewTaskTime(e.target.value)}
-                 className="sm:hidden w-full bg-background/50 border border-border/40 rounded-lg pl-3 pr-2 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground font-semibold shadow-sm"
-                 style={{ WebkitAppearance: 'none' }}
-               />
+               {/* Mobile Custom Time Layout tracking Native Input */}
+               <div className="relative w-full sm:hidden border border-border/40 rounded-lg bg-background/50 shadow-sm focus-within:ring-2 focus-within:ring-primary/40 transition-all">
+                 <div className="absolute inset-0 flex items-center justify-between px-3 pointer-events-none">
+                   <div className={`flex items-center gap-2 ${!newTaskTime ? 'text-muted-foreground' : 'text-foreground font-semibold'}`}>
+                     <Clock className={`w-4 h-4 ${!newTaskTime ? 'opacity-70' : 'text-primary'}`} />
+                     <span className="text-sm">{newTaskTime || 'Select time'}</span>
+                   </div>
+                   {!newTaskTime && <ChevronDown className="w-4 h-4 text-muted-foreground opacity-50" />}
+                 </div>
+                 <input
+                   type="time"
+                   value={newTaskTime}
+                   onChange={(e) => setNewTaskTime(e.target.value)}
+                   onClick={(e) => {
+                     try { if (e.target.showPicker) e.target.showPicker(); } catch (err) {}
+                   }}
+                   className="w-full opacity-0 cursor-pointer py-2.5 outline-none pl-3"
+                 />
+               </div>
             </div>
             
             <button
@@ -131,13 +143,33 @@ export function DailyTasksEditor({ currentKey }) {
                   
                   <div className="flex gap-2 w-full border-border/50">
                     <div className="relative flex-1 shrink-0">
+                      {/* Mobile Overlay */}
+                      <div className="relative sm:hidden w-full bg-background border border-border/60 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-primary/40 transition-all">
+                        <div className="absolute inset-0 flex items-center justify-between px-3 pointer-events-none">
+                          <div className={`flex items-center gap-2 ${!editTaskTime ? 'text-muted-foreground' : 'text-foreground font-semibold'}`}>
+                            <Clock className={`w-4 h-4 ${!editTaskTime ? 'opacity-70' : 'text-primary'}`} />
+                            <span className="text-sm">{editTaskTime || 'Select time'}</span>
+                          </div>
+                          {!editTaskTime && <ChevronDown className="w-4 h-4 text-muted-foreground opacity-50" />}
+                        </div>
+                        <input
+                          type="time"
+                          value={editTaskTime}
+                          onChange={(e) => setEditTaskTime(e.target.value)}
+                          onClick={(e) => {
+                            try { if (e.target.showPicker) e.target.showPicker(); } catch (err) {}
+                          }}
+                          required
+                          className="w-full opacity-0 cursor-pointer py-2 outline-none pl-3"
+                        />
+                      </div>
+                      {/* Desktop Input */}
                       <input
                         type="time"
                         value={editTaskTime}
                         onChange={(e) => setEditTaskTime(e.target.value)}
                         required
-                        className="w-full bg-background border border-border/60 rounded-lg pl-3 pr-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground font-semibold shadow-sm"
-                        style={{ WebkitAppearance: 'none' }}
+                        className="hidden sm:block w-full bg-background border border-border/60 rounded-lg pl-3 pr-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground font-semibold shadow-sm"
                       />
                     </div>
                     
