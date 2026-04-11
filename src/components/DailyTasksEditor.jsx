@@ -71,7 +71,16 @@ export function DailyTasksEditor({ currentKey }) {
           <div className="flex gap-2 w-full">
             {/* Premium Custom Time Picker Component */}
             <div className="relative flex-1 shrink-0">
-               <CustomTimePicker value={newTaskTime} onChange={setNewTaskTime} />
+               <div className="hidden sm:block">
+                 <CustomTimePicker value={newTaskTime} onChange={setNewTaskTime} />
+               </div>
+               <input
+                 type="time"
+                 value={newTaskTime}
+                 onChange={(e) => setNewTaskTime(e.target.value)}
+                 className="sm:hidden w-full bg-background/50 border border-border/40 rounded-lg pl-3 pr-2 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-foreground font-semibold shadow-sm"
+                 style={{ WebkitAppearance: 'none' }}
+               />
             </div>
             
             <button
